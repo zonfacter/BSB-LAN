@@ -1,5 +1,25 @@
 # Development research
 
+## Contribution credits
+
+The Eurocontrol K/M LPB extensions, research tooling, protocol findings and
+regression tests in this contribution were developed collaboratively:
+
+- **Human contributor: [@zonfacter](https://github.com/zonfacter)** — project
+  direction, access to the heating installation, physical controller changes,
+  observations and real-hardware verification.
+- **AI assistance: OpenAI Codex** — protocol and source analysis,
+  implementation, test development and documentation in collaboration with
+  @zonfacter.
+- **Contributor-supplied model/run designation: GPT 6.1 Sol High.**
+
+Original project: [fredlcore/BSB-LAN](https://github.com/fredlcore/BSB-LAN),
+with its existing authors and contributors. These credits identify the
+Eurocontrol contribution submitted in
+[upstream PR #836](https://github.com/fredlcore/BSB-LAN/pull/836).
+
+## Findings and evidence
+
 - [K/M diagnostic signals and contribution boundaries](eurocontrol-lpb-diagnostics.md):
   scoped request/lock/status fields, burner/DHW configuration, evidence levels,
   open questions, and the relationship to the external dashboard.
