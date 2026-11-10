@@ -1,3 +1,21 @@
+> **Eurocontrol K/M development fork — [zonfacter](https://github.com/zonfacter)**
+>
+> This fork contains the tested legacy K/M extensions, protocol research and
+> regression tests developed with OpenAI Codex assistance. Active branch:
+> `codex/eurocontrol-lpb-research`.
+>
+> **[Start with the fork guide](docs/development/fork-guide.md)** ·
+> [Findings and credits](docs/development/README.md) ·
+> [Comparison with upstream](docs/development/upstream-comparison.md) ·
+> [External dashboard and ioBroker](https://github.com/zonfacter/SmartHome_py/tree/codex/heating-dashboard)
+>
+> Tested installation: Eurocontrol K family 22/254 and M family 23/254 on LPB.
+> The 133-field collector belongs to the external dashboard; firmware additions
+> are documented separately. Work continues in this fork; upstream PR #836 was
+> closed without merging. The original BSB-LAN project information follows.
+
+---
+
 # BSB-LPB-PPS-LAN
 
 [<img src="https://img.shields.io/github/last-commit/fredlcore/BSB-LAN">]()

@@ -1,5 +1,8 @@
 # Development research
 
+Start here: [Eurocontrol fork guide](fork-guide.md) — current implementation,
+private setup, build-only instructions, read/write boundaries and next work.
+
 ## Contribution credits
 
 The Eurocontrol K/M LPB extensions, research tooling, protocol findings and
