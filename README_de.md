@@ -5,6 +5,7 @@
 > `codex/eurocontrol-lpb-research`.
 >
 > **[Einstieg und Einrichtung](docs/development/fork-guide.md)** ·
+> [Aufgaben und Nachweise](https://github.com/zonfacter/BSB-LAN/issues/1) ·
 > [Erkenntnisse und Credits](docs/development/README.md) ·
 > [Abgleich mit dem Originalprojekt](docs/development/upstream-comparison.md) ·
 > [Oberfläche und ioBroker](https://github.com/zonfacter/SmartHome_py/tree/codex/heating-dashboard)

@@ -3,6 +3,10 @@
 Start here: [Eurocontrol fork guide](fork-guide.md) — current implementation,
 private setup, build-only instructions, read/write boundaries and next work.
 
+Track implementation and open evidence in the
+[fork issue overview #1](https://github.com/zonfacter/BSB-LAN/issues/1).
+It links completed fixes/features separately from outstanding verification.
+
 ## Contribution credits
 
 The Eurocontrol K/M LPB extensions, research tooling, protocol findings and

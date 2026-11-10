@@ -100,13 +100,20 @@ Schreibfreigabe.
 
 ## Weitere Entwicklung
 
+Die [zentrale Issue-Übersicht #1](https://github.com/zonfacter/BSB-LAN/issues/1)
+verknüpft abgeschlossene Arbeiten und offene Nachweise. Die Einzelissues
+enthalten Quellen, Abschlusskriterien und Grenzen; ihr GitHub-Status ist der
+aktuelle Arbeitsstand. Ein geschlossenes Implementierungsissue bedeutet
+nicht, dass sämtliche Folgefragen bereits geklärt sind.
+
 | Priorität | Aufgabe | Nächster Nachweis |
 | --- | --- | --- |
-| 1 | Weitere bereits gelesene Felder gezielt in die Firmware übernehmen | Passende Programmnummern, exakte Layouts, Tests und zunächst lesende Profile |
-| 2 | M-Betriebsniveau verständlich darstellen | Beobachtete Werte 0/1/2 von der noch offenen Attributbedeutung trennen |
-| 3 | Pumpenkontext und Sperrsignale verfeinern | Natürliche Warmwasser-/Nachlaufphasen und zeitlich zusammenpassende Signale; unbekannte Bits bleiben roh |
-| 4 | K-Code 4 mit eindeutiger Tastenbeobachtung prüfen | Normaler Dauerbetrieb und separater Handbetrieb müssen ausdrücklich unterschieden werden |
-| 5 | Passende gerätespezifische Definition vergleichen, falls verfügbar | CoIDs, Zustände, Enums, Skalierungen, Einheiten, Zugriffe und Zeitprogrammformate vergleichen |
+| 1 | [Weitere gelesene Felder in die Firmware übernehmen · #9](https://github.com/zonfacter/BSB-LAN/issues/9) | Passende Programmnummern, exakte Layouts, Tests und zunächst lesende Profile |
+| 2 | [M-Betriebsniveau verständlich darstellen · #10](https://github.com/zonfacter/BSB-LAN/issues/10) | Beobachtete Werte 0/1/2 von der noch offenen Attributbedeutung trennen |
+| 3 | [Pumpenkontext und Sperrsignale verfeinern · #12](https://github.com/zonfacter/BSB-LAN/issues/12) | Natürliche Warmwasser-/Nachlaufphasen und zeitlich zusammenpassende Signale; unbekannte Bits bleiben roh |
+| 4 | [K-Code 4 mit eindeutiger Tastenbeobachtung prüfen · #11](https://github.com/zonfacter/BSB-LAN/issues/11) | Normaler Dauerbetrieb und separater Handbetrieb müssen ausdrücklich unterschieden werden |
+| 5 | [Passende gerätespezifische Definition vergleichen · #13](https://github.com/zonfacter/BSB-LAN/issues/13) | CoIDs, Zustände, Enums, Skalierungen, Einheiten, Zugriffe und Zeitprogrammformate vergleichen |
+| 6 | [Fern-SET für K-Parameter 65 klären · #14](https://github.com/zonfacter/BSB-LAN/issues/14) | Exakte Zustandsdarstellung, Faktor erhalten, später separat beauftragter Gerätetest |
 
 Diese Liste beschreibt offene Arbeit. Sie behauptet weder vollständige
 Entschlüsselung der Sperrsignale noch globale Neuheit der Herstellerdaten.
