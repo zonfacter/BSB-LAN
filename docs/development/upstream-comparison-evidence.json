@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "upstream_commit": "31e5efa1770b48792e7c813b5514261f8c8d003c",
+  "fork_source_commit": "ba0c01f7569f7adb0fe0b36d7d41b70b3d72598c",
+  "remote_master_verified_equal_to_upstream_commit": true,
+  "existing_upstream_guidance": [
+    "https://github.com/fredlcore/BSB-LAN/discussions/482",
+    "https://docs.bsb-lan.de/de/install.html#generieren-der-geratespezifischen-parameterliste"
+  ],
+  "earlier_directory_report": {
+    "sha256": "f759d009cf188b2a1ead4a58cf51c3bd115b139a4d960968b60f5640a7dd99ad",
+    "observed_models": [
+      "RVA43.2223/500, OV200.4",
+      "RVA46.531/500, OV200.6"
+    ],
+    "message_both_devices": "Not supported by this device. No problem.",
+    "limitation": "No IQ request/answer pair was retained in that text; do not infer an explicit TYPE_ERR rejection from the message."
+  },
+  "fresh_bounded_header_check": {
+    "scope": "Exactly one payload-free IQ1 header request and one ordinary QUR positive control per device; no Q/QDB bulk scan, no SET/INF, no reboot.",
+    "buswritable_before": 0,
+    "buswritable_after": 0,
+    "reads": [
+      {
+        "target": 0,
+        "family": 22,
+        "variant": 254,
+        "query_type": 18,
+        "command": "00000000",
+        "utc": "2026-11-10T00:00:50.998316+00:00",
+        "tx_hex": "78 0C 00 42 C0 02 00 14 12 00 00 F6 B8",
+        "rx_hex": "00",
+        "payload_free_read_verified": true,
+        "rx_checksum_valid": false,
+        "response_address_matches": false,
+        "response_type": null,
+        "result": "no_matching_directory_header"
+      },
+      {
+        "target": 0,
+        "family": 22,
+        "variant": 254,
+        "query_type": 6,
+        "command": "05000074",
+        "utc": "2026-11-10T00:00:54.424361+00:00",
+        "tx_hex": "78 0E 00 42 C0 02 00 14 06 00 05 00 74 F5 29",
+        "rx_hex": "78 10 42 00 0C 02 00 14 07 05 00 00 74 00 01 F2 7B",
+        "payload_free_read_verified": true,
+        "rx_checksum_valid": true,
+        "response_address_matches": true,
+        "response_type": 7,
+        "result": "normal_read_answer"
+      },
+      {
+        "target": 1,
+        "family": 23,
+        "variant": 254,
+        "query_type": 18,
+        "command": "00000000",
+        "utc": "2026-11-10T00:00:54.928275+00:00",
+        "tx_hex": "78 0C 01 42 C0 02 00 14 12 00 00 F6 B9",
+        "rx_hex": "00",
+        "payload_free_read_verified": true,
+        "rx_checksum_valid": false,
+        "response_address_matches": false,
+        "response_type": null,
+        "result": "no_matching_directory_header"
+      },
+      {
+        "target": 1,
+        "family": 23,
+        "variant": 254,
+        "query_type": 6,
+        "command": "05000074",
+        "utc": "2026-11-10T00:00:58.362894+00:00",
+        "tx_hex": "78 0E 01 42 C0 02 00 14 06 00 05 00 74 F5 2A",
+        "rx_hex": "78 10 42 01 0C 02 00 14 07 05 00 00 74 00 01 F2 7C",
+        "payload_free_read_verified": true,
+        "rx_checksum_valid": true,
+        "response_address_matches": true,
+        "response_type": 7,
+        "result": "normal_read_answer"
+      }
+    ],
+    "limit": "A missing header in a bounded test does not prove every alternative catalog protocol is unsupported."
+  },
+  "fresh_header_limit": "rx_hex 00 denotes no valid received LPB frame from this API; not a checksum-valid controller rejection. Ordinary control reads succeeded on both devices.",
+  "source_sha256": {
+    "BSB_LAN/BSB_LAN.ino": {
+      "upstream": "a854c87cc21f38d5ad5072925406a089d328551db5b35759e956daf692ba2d87",
+      "fork": "2c76c63406a28f2213673ab238e2a177feb8aea4985f167010f275473c66fb26"
+    },
+    "BSB_LAN/include/print_telegram.h": {
+      "upstream": "fd3420fa0b8a1de5a56a232c07c0f23dd8c41b04cc53d6b69f5617f29f1801c6",
+      "fork": "e290157e913a6cdb7a8b78ad585b786bab4848c70281e5675eb9ce30d64be67a"
+    },
+    "BSB_LAN/src/BSB/bsb.cpp": {
+      "upstream": "413e52ce25aaf59ec501d40ac466c18984afe507ffd739af59d1ca2d6964b116",
+      "fork": "49a43af70f1c635518b4ba952799c4b29ca3d9eb96f88b10382e62c18cb39d24"
+    }
+  },
+  "regressions": {
+    "same_harnesses_on_both_sources": true,
+    "upstream_compilation": "both passed",
+    "upstream_runtime": "both failed",
+    "fork_compilation": "both passed",
+    "fork_runtime": "both passed",
+    "tests": [
+      {
+        "file": "test_json_raw_url.py",
+        "sha256": "c16e7ffbdc00c604f5c1fd70880f724464098646501a7066f7027193e8e22dd4"
+      },
+      {
+        "file": "test_string_telegram.py",
+        "sha256": "0293b5efdd49677923709c1c70e2da43dab22fbd63098d649e73b1fe0961e098"
+      }
+    ],
+    "upstream_failures": [
+      "set.payload == std::vector<uint8_t>({0x00, 0x00, 0x40})",
+      "msg == original && crc_valid(msg)"
+    ],
+    "stock_log_sha256": "29fda891c06965edb04eedcd8e7d4a6a11138f6f468d3d17354d3a63b37c7cff",
+    "fork_log_sha256": "cb0bb27a202ba1a5518134871810081c924aa6cac3f977b841d8c388f30cc142"
+  },
+  "conclusion": "Two independent generic software regressions are demonstrated relative to this upstream revision. Device-specific empirical findings remain locally verified; global novelty or absence from maintainer-generated definitions has not been established."
+}

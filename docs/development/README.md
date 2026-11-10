@@ -16,9 +16,14 @@ regression tests in this contribution were developed collaboratively:
 Original project: [fredlcore/BSB-LAN](https://github.com/fredlcore/BSB-LAN),
 with its existing authors and contributors. These credits identify the
 Eurocontrol contribution submitted in
-[upstream PR #836](https://github.com/fredlcore/BSB-LAN/pull/836).
+[upstream PR #836](https://github.com/fredlcore/BSB-LAN/pull/836), which was
+closed without merging. Development continues in this fork.
 
 ## Findings and evidence
+
+- [Comparison with existing upstream support](upstream-comparison.md):
+  the supported device-specific-list workflow, the observed K/M directory
+  limitation, two controlled source regressions, and limits on novelty claims.
 
 - [K/M diagnostic signals and contribution boundaries](eurocontrol-lpb-diagnostics.md):
   scoped request/lock/status fields, burner/DHW configuration, evidence levels,

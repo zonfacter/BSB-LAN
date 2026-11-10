@@ -54,16 +54,16 @@ static std::vector<std::string> normal_json_tokens(const char *url) {
 int main() {
     const char *set_url = "/JY03,0500060F,000040!0";
     Parsed set = parse_raw(set_url);
-    CHECK(set.url == set_url);
     CHECK(set.type == 3 && set.command == 0x0500060F);
     CHECK(set.payload == std::vector<uint8_t>({0x00, 0x00, 0x40}));
     CHECK(set.destination == 0 && destination_changed_to == 0 && set.changed);
+    CHECK(set.url == set_url);
 
     const char *query_url = "/JY06,05000488!1";
     Parsed query = parse_raw(query_url);
-    CHECK(query.url == query_url);
     CHECK(query.type == 6 && query.command == 0x05000488 && query.payload.empty());
     CHECK(query.destination == 1 && destination_changed_to == 1);
+    CHECK(query.url == query_url);
 
     destination_changed_to = 255;
     Parsed info = parse_raw("/JY02,2D3D0215,000500");
