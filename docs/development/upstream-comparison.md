@@ -54,6 +54,38 @@ The fresh read evidence and the earlier report digest are retained in
 This is a material installation-specific limitation to the otherwise valid
 general advice to use a device-specific list.
 
+### User-supplied directory download, 2026-11-10
+
+The supplied `BSB-LAN-022-254-2004-11952.txt` is another raw download report,
+not a generated parameter-definition file. Despite its K-based filename, it
+contains sections for both K and M. Both end with the same unsupported-device
+message. The report contains 20 ordinary answer/error frames, no IA1/IA2
+directory-answer frames and no complete parameter catalog. The file alone does
+not identify which IQ request was sent or prove that every catalog route fails.
+The matching generated-definition comparison therefore remains open in
+[issue #13](https://github.com/zonfacter/BSB-LAN/issues/13).
+
+Eighteen logged frames have valid LPB checksums. The two exceptions are the
+device-name strings at CoID `053D0001`:
+
+| Controller | Checksum calculated from logged bytes | Logged checksum |
+| --- | --- | --- |
+| K | `E6 6D` | `00 6D` |
+| M | `E6 41` | `00 41` |
+
+The first checksum byte is zeroed in each name frame. This exactly matches the
+known old string-decoder behavior: it writes the terminating zero at the end
+of the payload, which is the first checksum byte. The file reports firmware
+`5.1.38-20261108-EC-K-LPB-RO`; publishing the fork fix does not install it on
+that live adapter. This observation corroborates the source regression in
+[issue #3](https://github.com/zonfacter/BSB-LAN/issues/3), but the text export
+is not an independent capture of the original on-wire bytes. It is not evidence
+of a physical bus fault. It also does not show that correcting the string export
+would make the directory-header query succeed.
+
+The report digest and compact checksum findings are included in the comparison
+evidence JSON. The source attachment itself remains local.
+
 ## Classification of the work
 
 | Item | Existing upstream capability / knowledge | Result of comparison |

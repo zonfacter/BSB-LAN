@@ -123,5 +123,41 @@
     "stock_log_sha256": "29fda891c06965edb04eedcd8e7d4a6a11138f6f468d3d17354d3a63b37c7cff",
     "fork_log_sha256": "cb0bb27a202ba1a5518134871810081c924aa6cac3f977b841d8c388f30cc142"
   },
-  "conclusion": "Two independent generic software regressions are demonstrated relative to this upstream revision. Device-specific empirical findings remain locally verified; global novelty or absence from maintainer-generated definitions has not been established."
+  "conclusion": "Two independent generic software regressions are demonstrated relative to this upstream revision. Device-specific empirical findings remain locally verified; global novelty or absence from maintainer-generated definitions has not been established.",
+  "user_supplied_directory_report_20261110": {
+    "filename": "BSB-LAN-022-254-2004-11952.txt",
+    "sha256": "b480ec6d32a2bbd015b0270504b7f668022ecf63966ff6ac2c7f3e97c26d15e5",
+    "byte_count": 1749,
+    "classification": "Raw download report; no generated parameter definitions or full directory.",
+    "firmware_label": "5.1.38-20261108-EC-K-LPB-RO",
+    "controllers_in_report": [
+      "K",
+      "M"
+    ],
+    "logged_frame_count": 20,
+    "valid_checksum_frames": 18,
+    "directory_answer_frames": 0,
+    "unsupported_messages": 2,
+    "string_checksum_anomalies": [
+      {
+        "source": 0,
+        "coid": "053D0001",
+        "calculated_checksum": "E66D",
+        "logged_checksum": "006D"
+      },
+      {
+        "source": 1,
+        "coid": "053D0001",
+        "calculated_checksum": "E641",
+        "logged_checksum": "0041"
+      }
+    ],
+    "interpretation": "Both string frames have the first checksum byte zeroed, consistent with the old string decoder writing a terminator into the received checksum.",
+    "limits": [
+      "The report is not an independent on-wire capture.",
+      "No IQ request/answer pair retained; not a universal unsupported-protocol proof.",
+      "The file does not contain the still-missing generated device-specific definitions.",
+      "Fixing string logging is not proven to fix directory enumeration."
+    ]
+  }
 }
