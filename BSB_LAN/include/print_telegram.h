@@ -1162,6 +1162,23 @@ void printTelegram(byte* msg, float query_line) {
                 }
               break;
 */
+            case VT_RVA_SETTING:
+            case VT_RVA_LEVEL:
+            {
+              const byte *payload = msg + bus->getPl_start();
+              if (data_len != 2) {
+                undefinedValueToBuffer(decodedTelegram.value);
+                decodedTelegram.error = 256;
+                printToDebug(decodedTelegram.value);
+              } else if (decodedTelegram.type == VT_RVA_SETTING && payload[0] != 0) {
+                undefinedValueToBuffer(decodedTelegram.value);
+                printToDebug(decodedTelegram.value);
+              } else {
+                const byte index = decodedTelegram.type == VT_RVA_LEVEL ? 0 : 1;
+                printENUM(decodedTelegram.enumstr, decodedTelegram.enumstr_len, payload[index], 1);
+              }
+              break;
+            }
             case VT_WEEKDAY:
             case VT_ENUM: // enum
               if (data_len == 2 || data_len == 3) {

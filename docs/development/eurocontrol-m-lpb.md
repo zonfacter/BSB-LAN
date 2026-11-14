@@ -35,17 +35,18 @@ boot by this extension.
 | 8731 | 05000488, byte 0 | Mixing-valve opening relay Y1 |
 | 8732 | 05000488, byte 1 | Mixing-valve closing relay Y2 |
 | 8740 | 0500051E | Actual room temperature, or disabled/invalid |
+| 8740.1 | 2D00020B, byte 0 | Current operating level: frost protection, reduced or comfort |
 | 8741 | 05000593 | Current room setpoint |
 | 8743 | 05000464 | Actual flow temperature |
 | 8744 | 05000667 | Resulting flow setpoint |
 
-`750.1`, `830.1`, `8731` and `8732` are branch-specific extensions. These are
+`750.1`, `830.1`, `8731`, `8732` and `8740.1` are branch-specific extensions. These are
 BSB-LAN identifiers, not panel line numbers. In particular, `830.1` is placed
 beside the mixing-circuit setting within the default heating-circuit category;
 it does not label the M pump as a boiler pump.
 
 The observed installation addresses the M as destination 1. For example,
-`/JQ=710!1,8730!1,8731!1,8732!1,8740!1,8743!1,8744!1` requests these programs
+`/JQ=710!1,8730!1,8731!1,8732!1,8740!1,8740.1!1,8743!1,8744!1` requests these programs
 using the existing per-parameter destination syntax. Verify actual destination
 assignments for another installation. MQTT/logging parameter identifiers can
 likewise distinguish `!0` and `!1` through the existing destination handling.
@@ -64,7 +65,9 @@ selected and the separate emergency manual button was OFF. The M returned
 `00 04`. The previous shared English catalog translation "Manual" therefore
 gave the wrong UI meaning for this mode on the tested M. Program 700 now uses
 an M-specific enum: 0 standby, 1 automatic, 4 continuous operation. The K enum
-is deliberately unchanged pending an equally explicit K button test.
+keeps the manual label for its observed code-4 operation with the separate
+manual switch under the cover. The upper continuous-operation button on K
+still needs a comparison.
 
 The complete physical sequence was automatic -> continuous -> standby ->
 automatic, with K left in automatic. The current room setpoint changed
@@ -73,6 +76,12 @@ automatic, with K left in automatic. The current room setpoint changed
 correlate with frost/reduced/comfort on this M. The unchanged second byte is
 not assigned a meaning. These are operating levels, not another mode enum:
 automatic operation can select different levels at other times.
+
+Read-only program `8740.1` displays the current operating level for M family
+23, variant 254. Program `700` still displays the selected operating mode.
+The decoder reads the first byte of an exact two-byte reply. An unfamiliar
+first-byte value stays numeric and is flagged as an unknown enum. The existing
+raw-telegram output retains both bytes for inspection.
 
 The M pump contact was on in continuous mode, briefly remained on during the
 first standby collection, then was off, and remained off after returning to

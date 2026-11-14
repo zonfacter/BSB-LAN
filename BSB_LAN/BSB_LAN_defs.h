@@ -821,7 +821,9 @@ typedef enum{
   VT_UNKNOWN,
   // Append new types so existing type numbers in custom definitions stay stable.
   VT_ENABLE_STATE,      // Read-only scalar validity byte: 00=enabled, 01=disabled.
-  VT_RAW_ONOFF          // Read-only boolean field in an eight-byte raw relay block.
+  VT_RAW_ONOFF,         // Read-only boolean field in an eight-byte raw relay block.
+  VT_RVA_SETTING,       // Read-only two-byte scalar: state byte, then raw enum.
+  VT_RVA_LEVEL          // Read-only two-byte block: raw enum, then unknown attribute.
 }vt_type_t;
 
 /* order of types must according to vt_type_t enum */
@@ -1002,6 +1004,8 @@ const units optbl[]={
 {VT_UNKNOWN,          1.0,    0, 0,        DT_STRN, 1,  UNIT_NONE,         STR_UNKNOWN          },
 {VT_ENABLE_STATE,     1.0,    0, 1,        DT_ENUM, 0,  UNIT_NONE,         STR_ONOFF            },
 {VT_RAW_ONOFF,        1.0,    0, 8,        DT_ENUM, 0,  UNIT_NONE,         STR_ONOFF            },
+{VT_RVA_SETTING,      1.0,    0, 2,        DT_ENUM, 0,  UNIT_NONE,         STR_ENUM             },
+{VT_RVA_LEVEL,        1.0,    0, 2,        DT_ENUM, 0,  UNIT_NONE,         STR_ENUM             },
 };
 
 const char STR10100[] = STR10100_TEXT;

@@ -131,8 +131,8 @@ int main() {
     def test_default_profile_is_scoped_and_unverified_writes_are_readonly(self):
         default = (ROOT / "BSB_LAN/BSB_LAN_custom_defs.h.default").read_text(encoding="utf-8")
         rows = [line for line in default.splitlines() if line.startswith("{") and "DEV_022_254" in line]
-        self.assertEqual(len(rows), 6)
-        for number in ("700", "750", "750.1", "8730"):
+        self.assertEqual(len(rows), 8)
+        for number in ("700", "750", "750.1", "5730.1", "5770.1", "8730"):
             matching = [r for r in rows if re.search(r",\s*" + re.escape(number) + r"\s*,", r)]
             self.assertEqual(len(matching), 1)
             self.assertIn("FL_RONLY", matching[0])
@@ -152,7 +152,7 @@ int main() {
     def test_m_profile_is_readonly_and_keeps_legacy_scaling(self):
         default = (ROOT / "BSB_LAN/BSB_LAN_custom_defs.h.default").read_text(encoding="utf-8")
         rows = [r for r in default.splitlines() if r.startswith("{") and "DEV_023_254" in r]
-        self.assertEqual(len(rows), 23)
+        self.assertEqual(len(rows), 24)
         for row in rows:
             self.assertIn("FL_RONLY", row)
             self.assertNotIn("DEFAULT_FLAG", row)
@@ -234,9 +234,14 @@ int main() {
   CHECK(table[findLine(750.1)].type==VT_ENABLE_STATE);
   CHECK(table[findLine(750.1)].flags & FL_RONLY);
   CHECK(table[findLine(8730)].type==VT_RAW_ONOFF);
+  CHECK(table[findLine(5730.1)].cmd==0x0500071E);
+  CHECK(table[findLine(5770.1)].cmd==0x05000930);
+  CHECK(findLine(8740.1)==-1);
   CHECK(table[findLine(710)].cmd==0x2D3D058E); // K keeps its existing generic row
   CHECK(findLine(8743)==-1);
   my_dev_fam=23;
+  CHECK(table[findLine(8740.1)].cmd==0x2D00020B);
+  CHECK(findLine(5730.1)==-1 && findLine(5770.1)==-1);
   CHECK(table[findLine(700)].cmd==0x05000074);
   CHECK(table[findLine(700)].enumstr==RVA_M_MODE_ENUM);
   CHECK(table[findLine(700)].enumstr_len==sizeof(RVA_M_MODE_ENUM));

@@ -1,6 +1,6 @@
 # Legacy Eurocontrol K/M diagnostic findings
 
-This report records findings through 2026-11-10 for one installation with a
+This report records findings through 2026-11-14 for one installation with a
 Eurocontrol K (family 22, variant 254) and M/RVA46 (family 23, variant 254).
 The K controls a direct radiator circuit, boiler and domestic hot water; the M
 controls a separate mixed floor-heating circuit. These functions and destination
@@ -61,6 +61,19 @@ Notable configuration objects, read on K unless marked K/M:
 | `0500006D` (K/M) | Clock source | Own clock / LPB without remote setting / LPB with remote setting / master |
 | `05000082` (K/M) | Outside-temperature source | Two block fields: segment, device; no scalar validity prefix |
 
+The default firmware table exposes the first and third configuration objects
+above as read-only K programs. Both use the scalar state byte followed by the
+exact enum byte. Other fields in the inventory remain candidates for separate review.
+
+| Firmware program | CoID | Decoded values |
+| --- | --- | --- |
+| 5730.1 | `0500071E` | `00 00` storage tank sensor, `00 FF` storage tank thermostat |
+| 5770.1 | `05000930` | `00 00` configured single stage, `00 FF` configured two stages |
+
+The burner configuration describes the controller setting. Actual wiring and
+operation of a second stage require separate evidence. The read decoder retains
+unrecognized enum values and the original response bytes.
+
 Burner hours were identified only in the K's nine-byte `11000209` producer
 block, bytes 5..8 as a signed seconds counter. Do not apply that interpretation
 to M's superficially similar producer block. Burner relay indication, flame
@@ -113,6 +126,32 @@ During natural DHW charging, K pump-off observations coincided with Q3 on and
 `64 01` in object 504. M could keep its pump on with that same reduction value,
 consistent with restricting a mixed circuit through its valve. These are
 correlations, not independent controlled proof of all priority effects.
+
+### Overnight comparison, 2026-11-14
+
+A read-only review of natural transitions found four space-heating burner
+runs with K's direct-circuit pump on and Q3 off. Three starts associated with
+a valid DHW request coincided with K's pump turning off and object 504
+reporting a valid 100% reduction. K reported the configured DHW priority
+as shifting. On two recoveries, K's pump restarted before the burner run
+ended, with Q3 still on and object 504 back to `00 00`.
+
+| Observed phase | K object 503 | K object 505 | K object 506 | K object 504 |
+| --- | --- | --- | --- | --- |
+| Space-heating burner run, K pump on, Q3 off | `02 03`, `04 03` | `00 00` | `32 00` | `02 03`, `05 03` |
+| First DHW start, K pump off before Q3 switched on | `01 03`, `10 03`, `18 03` | `00 00` | `32 00` | `64 03` |
+| Repeated DHW runs, K pump off and Q3 on | `00 00` when available | `00 00` | `32 00` | Mainly `64 01` |
+| DHW pump overrun, K pump back on | `00 00` | `00 00` | `32 00`, `32 01` | `00 00` |
+
+M kept its pump on during the observed DHW runs. Its 503/505/506 fields
+were all `00 00` when available in these phases, including while 504 reported
+a reduction. K's nonzero 503 readings occurred with its pump both on and off,
+and 503 returned to zero during sustained reduction at 504. K's second byte
+in 506 changed during an overrun window. These observations bound when the
+fields changed and leave their attributes unassigned. Low K boiler temperature
+and the mandatory reduction observed before Q3 switched on are compatible
+with a startup contribution. The records are sequential reads and do not
+establish an exact transition order within a polling cycle.
 
 The external collector groups each controller's related reads. Diagnosis
 requires valid samples, age no more than 90 s and a combined timestamp span no

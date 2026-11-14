@@ -113,6 +113,11 @@ changed from `00 04` to `00 01`. Automatic mode is therefore also confirmed
 against a physical mode change on the K. Room influence remained disabled,
 the differential remained `---`, and adaptation remained off.
 
+In a follow-up on 2026-11-14, the operator identified the control used for
+the earlier code-4 capture as the separate manual switch under the K cover.
+This confirms the physical context of that earlier reading. The upper
+continuous-operation button on K still needs its own comparison.
+
 ## Firmware support in this branch
 
 The default command table now includes these entries, restricted to the tested
@@ -125,6 +130,8 @@ LPB family 22 / variant 254:
 | `750` | Retained OEM gain KORR | Read only |
 | `750.1` | Room influence enabled, controller line 65 | Read only; normalized 0 or 1 |
 | `760` | Room switching differential, controller line 67 | Standard write protection applies; 0.5 to 4.0 K or `---` |
+| `5730.1` | DHW demand source: storage tank sensor or thermostat | Read only |
+| `5770.1` | Configured burner stages | Read only |
 | `8730` | Pump relay contact Q1 | Read only; normalized 0 or 1 |
 
 For example, `/JQ=700,726,750,750.1,760,8730` queries these programs on the
@@ -134,14 +141,20 @@ still reports the retained gain. A disabled differential uses the existing
 `---` representation, never a measured zero kelvin. The web UI, JSON and MQTT
 share the decoded values.
 
+The exact K description identifies `05000603` as a signed one-byte gain
+object referencing panel line 65. The passive observations establish the state
+byte on reads. Neither source establishes a SET operation to toggle that
+state. The verified SET prefixes for the different objects `0500060F` and
+`0500060B` provide no write validation for `05000603`.
+
 Program 760 uses active SET prefix `01` and the independently verified disable
 prefix `05`, preserving the numeric component from a fresh read. Invalid and
 nonfinite input, out-of-range temperatures, and unverified INF writes for the
 two writable objects are rejected before sending a telegram.
 
 Malformed scalar flags and truncated relay blocks produce a decoding error
-rather than a plausible off state. Existing type numbers are unchanged; the
-two read-only decoder types are appended to the type table. The new disable
+rather than a plausible off state. Read-only decoder types are appended to
+preserve existing type numbers. The disable
 flag affects only entries that explicitly request it.
 
 For a build with a private/generated `BSB_LAN_custom_defs.h`, merge the six

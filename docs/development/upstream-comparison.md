@@ -54,6 +54,13 @@ The fresh read evidence and the earlier report digest are retained in
 This is a material installation-specific limitation to the otherwise valid
 general advice to use a device-specific list.
 
+A follow-up checked public upstream master at
+`a5789152df0baa2c3bc11d5eb30818569cc28479`. Since the comparison baseline,
+upstream had changed the contribution template and version header only.
+The public tree search for model and family/variant names did not locate a
+matching custom definition file. A file generated separately for either model
+would still be needed for a field-by-field comparison.
+
 ### User-supplied directory download, 2026-11-10
 
 The supplied `BSB-LAN-022-254-2004-11952.txt` is another raw download report,
