@@ -93,30 +93,23 @@ mapping, so the reason for that earlier stop has not been proven.
 
 ## Family-specific operating mode
 
-**Scope update, 2026-11-10:** The controlled companion-M button test showed
-that code 4 means normal continuous operation on that M, with its separate
-emergency manual button off. The historical K observation below did not
-explicitly distinguish those two controls. It must not be used to establish
-that both controllers share the same code-4 meaning. The K implementation
-retains its prior interpretation until a matching K panel test is available;
-M now has its own enum. See [the M test](eurocontrol-m-lpb.md#controlled-operating-mode-correction-2026-11-10).
+The manufacturer description labels 0 standby, 1 automatic and 4 manual.
+Its entries for 2 and 3 are placeholders. In the earlier K capture the operator
+used the separate manual switch under the cover. Object `05000074` returned
+`00 04` and changed to `00 01` when the operator restored automatic operation.
+The operator confirmed the switch used in that capture on 2026-11-14.
 
-The manufacturer description's mode range is 0 through 4, with 0 = standby,
-1 = automatic, and 4 = manual; its entries for 2 and 3 are placeholders. Code 4
-was confirmed against the controller's physical display. Do not decode this
-object with a modern four-state `ENUM700` or invent meanings for the placeholder
-values. The companion RVA46 returned code 1, but its display was not checked
-independently in the same comparison.
+On 2026-11-14 the tested K (RVA43.2223/500, LPB family 22, variant 254)
+also returned `00 04` with the upper middle continuous-operation button lit
+and the separate manual switch off. The companion M reported `00 01`.
+During the K measurement its operating-level reply was `02 01`, its room
+setpoint was 20 °C and pump relay Q1 was on. After the operator pressed
+Auto, both controllers reported `00 01` again.
 
-After the operator switched the K from manual to automatic, the same object
-changed from `00 04` to `00 01`. Automatic mode is therefore also confirmed
-against a physical mode change on the K. Room influence remained disabled,
-the differential remained `---`, and adaptation remained off.
-
-In a follow-up on 2026-11-14, the operator identified the control used for
-the earlier code-4 capture as the separate manual switch under the K cover.
-This confirms the physical context of that earlier reading. The upper
-continuous-operation button on K still needs its own comparison.
+Program 700 displays both observed meanings for K code 4. Distinguishing the
+two physical positions requires additional evidence beyond that object. See
+[the read-only captures](eurocontrol-k-mode-test-20261114.json) and
+[the companion M test](eurocontrol-m-lpb.md#controlled-operating-mode-correction-2026-11-10).
 
 ## Firmware support in this branch
 
@@ -125,7 +118,7 @@ LPB family 22 / variant 254:
 
 | BSB-LAN program | Display / API meaning | Access |
 | --- | --- | --- |
-| `700` | Legacy mode: 0 standby, 1 automatic, 4 manual | Read only |
+| `700` | Legacy mode: 0 standby, 1 automatic, 4 continuous operation / manual | Read only |
 | `726` | Curve adaptation, controller line 71 | Standard write protection applies; SET accepts only 0 or 1 |
 | `750` | Retained OEM gain KORR | Read only |
 | `750.1` | Room influence enabled, controller line 65 | Read only; normalized 0 or 1 |

@@ -1,0 +1,53 @@
+{
+  "scope": "Eurocontrol K family 22 variant 254, operator confirmed upper middle button lit and manual switch off; Eurocontrol M remained in automatic during this capture.",
+  "frames": [
+    {
+      "phase": "continuous",
+      "target_family": 22,
+      "coid": "05000074",
+      "payload_hex": "0004",
+      "tx_hex": "780e0042c00200140600050074f529",
+      "rx_hex": "781042000c02001407050000740004f27e"
+    },
+    {
+      "phase": "continuous",
+      "target_family": 23,
+      "coid": "05000074",
+      "payload_hex": "0001",
+      "tx_hex": "780e0142c00200140600050074f52a",
+      "rx_hex": "781042010c02001407050000740001f27c"
+    },
+    {
+      "phase": "continuous",
+      "target_family": 22,
+      "coid": "2D00020B",
+      "payload_hex": "0201",
+      "tx_hex": "780e0042c002001406002d020bf4ea",
+      "rx_hex": "781042000c020014072d00020b0201f23e"
+    },
+    {
+      "phase": "continuous",
+      "target_family": 22,
+      "coid": "05000593",
+      "payload_hex": "000500",
+      "tx_hex": "780e0042c00200140600050593f54d",
+      "rx_hex": "781142000c0200140705000593000500f1a5"
+    },
+    {
+      "phase": "continuous",
+      "target_family": 22,
+      "coid": "05000488",
+      "payload_hex": "0000ff0000000000",
+      "tx_hex": "780e0042c00200140600050488f541",
+      "rx_hex": "781642000c02001407050004880000ff0000000000ed9d"
+    },
+    {
+      "phase": "auto_return",
+      "target_family": 22,
+      "coid": "05000074",
+      "payload_hex": "0001",
+      "tx_hex": "780e0042c00200140600050074f529",
+      "rx_hex": "781042000c02001407050000740001f27b"
+    }
+  ]
+}

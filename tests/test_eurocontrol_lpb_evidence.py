@@ -22,8 +22,9 @@ class EurocontrolEvidence(unittest.TestCase):
         self.evidence = json.loads((ROOT / 'docs/development/eurocontrol-mode-test-20261110.json').read_text())
 
     def test_every_retained_frame_is_the_claimed_payload_free_read_and_answer(self):
-        self.assertTrue(self.evidence['frames'])
-        for frame in self.evidence['frames']:
+        k_test = json.loads((ROOT / 'docs/development/eurocontrol-k-mode-test-20261114.json').read_text())
+        self.assertTrue(self.evidence['frames'] and k_test['frames'])
+        for frame in self.evidence['frames'] + k_test['frames']:
             with self.subTest(phase=frame['phase'], coid=frame['coid'], family=frame['target_family']):
                 tx, rx = packet(frame['tx_hex']), packet(frame['rx_hex'])
                 command = bytes.fromhex(frame['coid'])
@@ -34,6 +35,13 @@ class EurocontrolEvidence(unittest.TestCase):
                 self.assertEqual(tx[9:13], bytes([command[1], command[0], command[2], command[3]]))
                 self.assertEqual(rx[9:13], command)
                 self.assertEqual(rx[13:-2], bytes.fromhex(frame['payload_hex']))
+
+    def test_k_continuous_button_and_auto_return(self):
+        evidence = json.loads((ROOT / 'docs/development/eurocontrol-k-mode-test-20261114.json').read_text())
+        modes = {(frame['phase'], frame['target_family']): frame['payload_hex']
+                 for frame in evidence['frames'] if frame['coid'] == '05000074'}
+        self.assertEqual(modes, {('continuous', 22): '0004', ('continuous', 23): '0001',
+                                 ('auto_return', 22): '0001'})
 
     def test_recorded_M_modes_and_levels_cover_both_changes_and_auto_return(self):
         frames = {(f['phase'], f['coid']): bytes.fromhex(f['payload_hex'])

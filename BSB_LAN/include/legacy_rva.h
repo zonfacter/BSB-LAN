@@ -45,13 +45,13 @@ const char RVA_ROOM_DIFF[] = RVA_ROOM_DIFF_TEXT;
 const char RVA_ADAPTATION[] = RVA_ADAPTATION_TEXT;
 const char RVA_PUMP_Q1[] = RVA_PUMP_Q1_TEXT;
 const char RVA_MODE[] = STR700_TEXT;
+// K returned code 4 with either the upper continuous button or the manual switch under the cover.
 const char RVA_MODE_ENUM[] = {
   "\x00 Standby\0"
   "\x01 " RVA_MODE_AUTO_TEXT "\0"
   "\x04 " RVA_MODE_MANUAL_TEXT
 };
 // M panel test: upper continuous-operation button, emergency manual OFF.
-// Keep K's historical mapping separate until its own controlled panel test.
 const char RVA_M_MODE_ENUM[] = {
   "\x00 Standby\0"
   "\x01 " RVA_MODE_AUTO_TEXT "\0"

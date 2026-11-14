@@ -5,7 +5,7 @@
 #define RVA_ADAPTATION_TEXT "Heizkennlinien-Adaption (Reglerzeile 71)"
 #define RVA_PUMP_Q1_TEXT "Pumpenrelaiskontakt Q1"
 #define RVA_MODE_AUTO_TEXT "Automatik"
-#define RVA_MODE_MANUAL_TEXT "Handbetrieb"
+#define RVA_MODE_MANUAL_TEXT "Dauerbetrieb / Handbetrieb"
 #define RVA_MODE_CONTINUOUS_TEXT "Dauerbetrieb"
 #define RVA_ROOM_STATE_GENERIC_TEXT "Raumeinfluss aktiv"
 #define RVA_ROOM_DIFF_GENERIC_TEXT "Schaltdifferenz Raum"
