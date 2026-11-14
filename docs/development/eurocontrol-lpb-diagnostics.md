@@ -91,10 +91,10 @@ Use the source's object scope, not a generic rule that bit 0 always means valid.
 | --- | --- | --- | --- |
 | `210001F4`, `250001F4`, `190001F4` | 500 | Four bytes: signed temperature /64, then 16-bit attributes | Unique physical pump-switching cause |
 | `150001F5` | 501 | Five-byte field layout only | Do not copy the four-byte request mask here |
-| `110001F7` | 503 | Two raw bytes retained | Attribute semantics and old-controller effects |
+| `110001F7` | 503 | Catalog: producer-group reduction byte and attribute byte; both retained raw | Attribute semantics and old-controller effects |
 | `150001F8` | 504 | Signed percent byte, attribute byte | Actual reduction at each consumer |
-| `190001F9` | 505 | Two raw bytes retained | No mask inferred from object 504 |
-| `110001FA` | 506 | Two raw bytes retained | No mask inferred from object 507 |
+| `190001F9` | 505 | Catalog: consumer-mixer reduction byte and attribute byte; both retained raw | Attribute semantics and effect in the tested plant |
+| `110001FA` | 506 | Catalog: producer-group forced value and attribute byte; both retained raw | Exact meaning of the observed attribute bit |
 | `150001FB` | 507 | Signed percent byte, attribute byte | Actual consumer action |
 | `11000209` | 521 | Raw producer block; bounded K counter above | Do not copy object 522 status mask here |
 | `1500020A` | 522 | Five bytes, leading 16-bit attributes | Remaining power/auxiliary fields |
@@ -153,6 +153,56 @@ and the mandatory reduction observed before Q3 switched on are compatible
 with a startup contribution. The records are sequential reads and do not
 establish an exact transition order within a polling cycle.
 
+### 24-hour comparison, 2026-11-13 to 2026-11-14
+
+The Siemens system-definition files `D0016682.apw` (related K profile) and
+`D0017684.apw` (M profile) agree on the layout of 503, 505 and 506.
+Their label rows 261–262, 265–266 and 269–270 respectively describe a signed
+byte at offset 0 and a mask byte at offset 1. The catalog abbreviations
+`EG` (producer group) and `VM` (consumer mixer) describe signal roles, not
+the floors of this installation. The referenced rows identify the layout;
+they do not establish a bit definition for these controllers.
+
+The comparison uses the external collector's event rows from 13 November
+09:10:20 through 14 November 09:10:20 (Europe/Berlin). For each object, an event
+was usable when the object, local pump contact, Q3, 504 and 507 readings were
+valid, at most 90 s old and within 30 s of each other. Counts describe
+recorded event rows, not run durations or independent observations.
+
+| Object | K (OG), usable / total | M (EG), usable / total | Observed result |
+| --- | ---: | ---: | --- |
+| 503 | 1188 / 1196 | 1276 / 1290 | K had eleven nonzero readings. K returned the same `01 03` with the OG pump contact on and off. M returned `00 00` throughout. |
+| 505 | 1189 / 1196 | 1272 / 1290 | Both returned only `00 00`, including while M commanded its mixer closed. |
+| 506 | 1189 / 1196 | 1276 / 1290 | K returned `32 00` 1100 times and `32 01` 89 times. M returned only `00 00`. |
+
+All 89 comparable K event rows with `32 01` also had `32 01` in 507 and an
+on OG pump contact. Q3 was off in 41 rows and on in 48. One row had 507
+`32 01` while 506 still read `32 00`; sequential requests can straddle a
+transition. There were 16 evaluable rising edges in 506, each bracketed by
+opposite readings no more than 90 s apart. All 16 overlapped the interval
+between the last burner-relay-on sample and first off sample, allowing 10 s
+of slack. The separate burner history had 19 eligible on-to-off intervals;
+the other three did not have an evaluable 506 edge under these criteria.
+The history records the burner relay, with no independent flame or flow
+measurement in this comparison.
+
+| Local time | Samples aligned for comparison |
+| --- | --- |
+| 13 Nov, 09:23:38 | K: 503 `01 03`, 504 `01 03`, OG pump on, Q3 off. |
+| 14 Nov, 04:00:58 | K: 503 `01 03`, 504 `64 03`, OG pump off, Q3 off. |
+| 13 Nov, 09:27:15 | K: 506/507 `32 01`, burner relay off, OG pump on, Q3 off. |
+| 13 Nov, 11:49:37 | K: 506/507 `32 01`, burner relay off, OG pump on, Q3 on. |
+| 13 Nov, 11:01:29 | M: 505 `00 00`, 504 `64 01`, Q3 on, EG pump off, mixer closing contact on, no valid local heat request. |
+| 13 Nov, 15:21:05 | M: 505 `00 00`, 504 `64 01`, Q3 on, EG pump on, mixer opening contact on, valid local heat request. |
+
+Object 506 now has a plausible burner-afterrun context across space heating
+and DHW. Siemens describes a forced LPB signal following burner switch-off
+for the [RVP360, section 12.4.5](https://cache.industry.siemens.com/dl/files/924/109788924/att_1045682/v1/A6V10331099.pdf#page=53).
+That functional comparison supports the hypothesis without assigning
+a 507 bit definition to 506. Object 503 alone does not predict the OG pump
+contact, and the M counterexamples show that zero in 505 does not exclude
+mixer activity. No new bit is used for automatic diagnosis.
+
 The external collector groups each controller's related reads. Diagnosis
 requires valid samples, age no more than 90 s and a combined timestamp span no
 more than 30 s for the fields actually used. It abstains for missing or skewed
@@ -173,8 +223,8 @@ This bounded negative result does not prove the whole function is inaccessible.
 
 ## Remaining verification work
 
-- Repeat the explicit normal-continuous versus emergency-manual distinction on
-  K before changing its historical code-4 translation.
+- Capture the K's chimney-sweep status during a scheduled flue-gas
+  measurement for [#11](https://github.com/zonfacter/BSB-LAN/issues/11).
 - Observe naturally occurring DHW priority and boiler startup/afterrun phases;
   make one authorized controller change at a time, retain before/after reads,
   verify restoration, and compare actual device indications.
