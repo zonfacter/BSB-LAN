@@ -203,6 +203,30 @@ a 507 bit definition to 506. Object 503 alone does not predict the OG pump
 contact, and the M counterexamples show that zero in 505 does not exclude
 mixer activity. No new bit is used for automatic diagnosis.
 
+### Follow-up observation, 2026-11-14
+
+The next recorded space-heating burner run (09:36:40 to 09:40:55 local time)
+ended with K objects 506 and 507 both changing to `32 01`. Q1 stayed on,
+Q3 stayed off and the local heating request remained valid. The next
+recorded DHW burner run (09:50:25 to 10:10:11) ended with the same paired
+signal, Q1 back on and Q3 still on. At 10:15:20 the two objects returned
+to `32 00` and `00 00` respectively. K reports a five-minute pump
+overrun setting (`05000BCC`). Times identify sampled states.
+
+At 11:32:25, after another DHW burner run, both force signals read
+`32 01` while Q1 was off, Q3 was on and no valid space-heating request
+was present. Both force signals returned to baseline at 11:37:35.
+This observation shows why the OG pump display requires its actual relay
+contact in addition to the two bus signals. The dashboard displays its
+OG afterrun indication when the two observed patterns agree, K4 is off
+and Q1 is on, with valid readings at most 90 s old and 30 s apart.
+
+The [Brötje LPB table for object 507](https://polo.broetje.de/pdf/7715040%3D6%3Dpdf_%28bdr_a4_manual%29%3Dde-de_ma_modbm.pdf#page=35)
+describes a valid overrun-only request. The [RVA43.222 OEM table, line 8](https://manualzz.com/doc/48218186/sime-rva43-222-boiler-controller-installation-and-operati...)
+describes pump overrun time after burner switch-off. The role of 506 here
+is established by the local comparison. Its general attribute map remains
+open.
+
 The external collector groups each controller's related reads. Diagnosis
 requires valid samples, age no more than 90 s and a combined timestamp span no
 more than 30 s for the fields actually used. It abstains for missing or skewed
