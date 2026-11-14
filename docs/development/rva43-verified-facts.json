@@ -64,10 +64,11 @@
       "function": "controller operating mode",
       "coid": "05000074",
       "read_payload": "0004",
-      "decoded_value": "manual",
+      "decoded_value": "continuous operation",
       "controller_display_independently_observed": true,
+      "mode_verification": "Upper middle continuous-operation button lit on the tested Eurotherm MRK K, lower button with chimney-sweep symbol inactive. See eurocontrol-k-mode-test-20261114.json.",
       "automatic_read_payload": "0001",
-      "automatic_verification": "After the operator switched the K from manual to automatic, the read changed from 00 04 to 00 01 while lines 65, 67 and 71 stayed disabled."
+      "automatic_verification": "After the operator restored automatic operation following the upper-button test, the read changed from 00 04 to 00 01."
     }
   ],
   "shared_object_distinction": {

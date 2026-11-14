@@ -111,7 +111,7 @@ nicht, dass sämtliche Folgefragen bereits geklärt sind.
 | 1 | [Weitere gelesene Felder in die Firmware übernehmen · #9](https://github.com/zonfacter/BSB-LAN/issues/9) | Passende Programmnummern, exakte Layouts, Tests und zunächst lesende Profile |
 | 2 | [M-Betriebsniveau verständlich darstellen · #10](https://github.com/zonfacter/BSB-LAN/issues/10) | Beobachtete Werte 0/1/2 von der noch offenen Attributbedeutung trennen |
 | 3 | [Pumpenkontext und Sperrsignale verfeinern · #12](https://github.com/zonfacter/BSB-LAN/issues/12) | Natürliche Warmwasser-/Nachlaufphasen und zeitlich zusammenpassende Signale; unbekannte Bits bleiben roh |
-| 4 | [K-Code 4 am Bedienfeld geprüft · #11](https://github.com/zonfacter/BSB-LAN/issues/11) | Beide Bedienzustände liefern Code 4. Die Firmware zeigt für K beide Bedeutungen an. |
+| 4 | [K-Code 4 am Bedienfeld geprüft · #11](https://github.com/zonfacter/BSB-LAN/issues/11) | Die obere Dauertaste liefert Code 4. Der Busstatus zur Taste mit Schornsteinfegersymbol bleibt offen. |
 | 5 | [Passende gerätespezifische Definition vergleichen · #13](https://github.com/zonfacter/BSB-LAN/issues/13) | CoIDs, Zustände, Enums, Skalierungen, Einheiten, Zugriffe und Zeitprogrammformate vergleichen |
 | 6 | [Fern-SET für K-Parameter 65 klären · #14](https://github.com/zonfacter/BSB-LAN/issues/14) | Exakte Zustandsdarstellung, Faktor erhalten, später separat beauftragter Gerätetest |
 

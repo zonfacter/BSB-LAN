@@ -64,10 +64,9 @@ The operator explicitly confirmed the upper continuous-operation button was
 selected and the separate emergency manual button was OFF. The M returned
 `00 04`. The previous shared English catalog translation "Manual" therefore
 gave the wrong UI meaning for this mode on the tested M. Program 700 now uses
-an M-specific enum: 0 standby, 1 automatic, 4 continuous operation. The K enum
-displays both observed meanings for code 4. The K returned this code with
-its upper continuous-operation button and in the earlier test with the
-manual switch under the cover. [K measurements](eurocontrol-k-lpb.md#family-specific-operating-mode)
+an M-specific enum: 0 standby, 1 automatic, 4 continuous operation. The
+upper continuous-operation button also produced code 4 on the tested MRK K.
+[K measurements](eurocontrol-k-lpb.md#family-specific-operating-mode)
 
 The complete physical sequence was automatic -> continuous -> standby ->
 automatic, with K left in automatic. The current room setpoint changed

@@ -27,7 +27,7 @@ numbers in the exact Eurocontrol K manual; they are not BSB-LAN program numbers.
 | Pump output contact Q1 | `05000488` | Raw eight-byte contact block; Q1 is at zero-based byte offset 2. |
 | 51: relay test | `05000073` | Read value 0 matched normal control rather than an output test. |
 | 72: pump function | `05000BCE` | Read value 1 matched the configured boiler/heating-circuit pump function. |
-| Heating operating mode | `05000074` | Code 4 matched manual operation at the actual controller. |
+| Heating operating mode | `05000074` | Code 4 matched the upper continuous-operation button on the tested controller. |
 
 Other successful scalar reads included the room knob setpoint (`05000458`),
 current room setpoint (`05000593`), curve slope (`050005F7`), DHW actual
@@ -94,21 +94,20 @@ mapping, so the reason for that earlier stop has not been proven.
 ## Family-specific operating mode
 
 The manufacturer description labels 0 standby, 1 automatic and 4 manual.
-Its entries for 2 and 3 are placeholders. In the earlier K capture the operator
-used the separate manual switch under the cover. Object `05000074` returned
-`00 04` and changed to `00 01` when the operator restored automatic operation.
-The operator confirmed the switch used in that capture on 2026-11-14.
-
-On 2026-11-14 the tested K (RVA43.2223/500, LPB family 22, variant 254)
-also returned `00 04` with the upper middle continuous-operation button lit
-and the separate manual switch off. The companion M reported `00 01`.
+Its entries for 2 and 3 are placeholders. On 2026-11-14 the tested Eurotherm
+MRK K (RVA43.2223/500, LPB family 22, variant 254) returned `00 04` with the
+upper middle continuous-operation button lit and the button under the cover
+inactive. The companion M reported `00 01`.
 During the K measurement its operating-level reply was `02 01`, its room
 setpoint was 20 °C and pump relay Q1 was on. After the operator pressed
 Auto, both controllers reported `00 01` again.
 
-Program 700 displays both observed meanings for K code 4. Distinguishing the
-two physical positions requires additional evidence beyond that object. See
-[the read-only captures](eurocontrol-k-mode-test-20261114.json) and
+The operator reports a chimney-sweep symbol on the lower button of the MRK K.
+An earlier capture returned `00 04` before Auto was restored. That capture
+has no simultaneous read of the chimney-sweep status (`05000925`), so the
+function active in that capture remains unverified. Program 700 labels code 4
+as continuous operation based on the upper-button test. See
+[the read-only capture](eurocontrol-k-mode-test-20261114.json) and
 [the companion M test](eurocontrol-m-lpb.md#controlled-operating-mode-correction-2026-11-10).
 
 ## Firmware support in this branch
@@ -118,7 +117,7 @@ LPB family 22 / variant 254:
 
 | BSB-LAN program | Display / API meaning | Access |
 | --- | --- | --- |
-| `700` | Legacy mode: 0 standby, 1 automatic, 4 continuous operation / manual | Read only |
+| `700` | Legacy mode: 0 standby, 1 automatic, 4 continuous operation | Read only |
 | `726` | Curve adaptation, controller line 71 | Standard write protection applies; SET accepts only 0 or 1 |
 | `750` | Retained OEM gain KORR | Read only |
 | `750.1` | Room influence enabled, controller line 65 | Read only; normalized 0 or 1 |
